@@ -4,7 +4,7 @@ Proyecto del curso DSAW · Universidad de La Sabana · Equipo: Samuel, Samuel Da
 
 ## Problema
 
-Los grupos de amigos en Colombia pierden tiempo y planes yendo de un lado a otro en WhatsApp tratando de ponerse de acuerdo sobre qué película ver, en qué cine y a qué hora. La información de las películas (horarios, cine, póster, calificación) se pierde entre los mensajes del chat, y no existe un solo lugar donde proponer un plan y ver quién realmente confirmó asistencia — así que los planes se van desarmando en silencio.
+En Colombia los amigos generalmente pierden demasiado tiempo cuadrando en WhatsApp, intentando ponerse de acuerdo sobre que hacer o en este caso que peliculas ver, en que cine y a que hora, con todo esto, la información de las peliculas y los horarios se pierden entre la información y los mensajes de chat, y no existe un lugar donde poder proponer un plan y ver quien realmente pudo confirmar asistencia, así que los planes se van deshaciendo lentamente, 
 
 ## Justificación de la aplicación web
 
