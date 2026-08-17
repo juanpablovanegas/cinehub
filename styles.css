@@ -1,0 +1,703 @@
+/* =========================================
+   CINEHUB
+   Main CSS
+   Typography, colors and layout
+   ========================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background-color: #14121a;
+  color: #f2f0f5;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.site-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  padding: 1rem 1.5rem;
+
+  background-color: #1e1b26;
+  border-bottom: 1px solid #2f2a3a;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #f2f0f5;
+}
+
+.logo::first-letter {
+  color: #ff2e88;
+}
+
+.nav-list {
+  list-style: none;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 1rem;
+}
+
+.nav-list a {
+  padding: 0.25rem 0;
+
+  border-bottom: 2px solid transparent;
+
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.nav-list a:hover,
+.nav-list a:focus {
+  color: #ff2e88;
+  border-color: #ff2e88;
+}
+
+
+/* =========================================
+   MAIN
+   ========================================= */
+
+main {
+  width: 100%;
+}
+
+
+/* =========================================
+   HERO
+   ========================================= */
+
+.hero {
+  padding: 3rem 1.5rem;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 46, 136, 0.16),
+      transparent 35%
+    );
+
+  min-height: 55vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+
+  max-width: 800px;
+
+  background: linear-gradient(
+    90deg,
+    #ffffff,
+    #ff2e88
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  color: #c7c2d1;
+
+  margin-bottom: 1.5rem;
+
+  max-width: 40rem;
+
+  font-size: 1rem;
+}
+
+
+/* =========================================
+   SEARCH
+   ========================================= */
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.6rem;
+
+  max-width: 30rem;
+}
+
+.search-form label {
+  font-size: 0.875rem;
+  color: #c7c2d1;
+  font-weight: 600;
+}
+
+.search-form input {
+  width: 100%;
+
+  padding: 0.75rem 0.9rem;
+
+  border: 1px solid #3a3348;
+  border-radius: 8px;
+
+  background-color: #211d2b;
+  color: #f2f0f5;
+
+  font-size: 1rem;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.search-form input:focus {
+  outline: none;
+
+  border-color: #ff2e88;
+
+  box-shadow: 0 0 0 3px rgba(255, 46, 136, 0.15);
+}
+
+
+/* =========================================
+   BUTTON
+   ========================================= */
+
+.btn {
+  padding: 0.7rem 1.3rem;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: #ff2e88;
+  color: #ffffff;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  align-self: flex-start;
+
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #e0247a;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================
+   MOVIES
+   ========================================= */
+
+#populares,
+#equipo {
+  padding: 3rem 1.5rem;
+}
+
+#populares h2,
+#equipo h2,
+.signup h2,
+.faq h2 {
+  margin-bottom: 1.5rem;
+
+  font-size: 1.6rem;
+
+  color: #ffffff;
+}
+
+#populares h2::after,
+#equipo h2::after,
+.signup h2::after,
+.faq h2::after {
+  content: "";
+
+  display: block;
+
+  width: 45px;
+  height: 3px;
+
+  margin-top: 0.5rem;
+
+  background-color: #ff2e88;
+
+  border-radius: 5px;
+}
+
+
+/* =========================================
+   GRID
+   ========================================= */
+
+.movie-grid,
+.team-grid {
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 1.25rem;
+}
+
+
+/* =========================================
+   CARDS
+   ========================================= */
+
+.movie-card,
+.team-card {
+  background-color: #1e1b26;
+
+  border: 1px solid #2f2a3a;
+
+  border-radius: 12px;
+
+  padding: 1rem;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.movie-card:hover,
+.team-card:hover {
+  transform: translateY(-5px);
+
+  border-color: #ff2e88;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.movie-card h3,
+.team-card h3 {
+  margin: 0.9rem 0 0.3rem;
+
+  font-size: 1.05rem;
+
+  color: #ffffff;
+}
+
+.movie-card p {
+  color: #c7c2d1;
+
+  font-size: 0.9rem;
+}
+
+.team-card p {
+  color: #c7c2d1;
+
+  font-size: 0.95rem;
+}
+
+
+/* =========================================
+   MOVIE IMAGES
+   ========================================= */
+
+.movie-card img {
+  width: 100%;
+
+  aspect-ratio: 2 / 3;
+
+  object-fit: cover;
+
+  border-radius: 8px;
+}
+
+
+/* =========================================
+   SIGNUP
+   ========================================= */
+
+.signup {
+  padding: 3rem 1.5rem;
+
+  background-color: #18151f;
+}
+
+.signup > p {
+  color: #c7c2d1;
+
+  max-width: 600px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+
+  max-width: 30rem;
+
+  margin-top: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.35rem;
+}
+
+.field label {
+  font-size: 0.875rem;
+
+  color: #c7c2d1;
+
+  font-weight: 600;
+}
+
+.field input {
+  width: 100%;
+
+  padding: 0.7rem 0.85rem;
+
+  border: 1px solid #3a3348;
+  border-radius: 8px;
+
+  background-color: #211d2b;
+  color: #f2f0f5;
+
+  font-size: 1rem;
+}
+
+.field input:focus {
+  outline: none;
+
+  border-color: #ff2e88;
+
+  box-shadow: 0 0 0 3px rgba(255, 46, 136, 0.15);
+}
+
+
+/* =========================================
+   FAQ
+   ========================================= */
+
+.faq {
+  padding: 3rem 1.5rem;
+
+  max-width: 900px;
+
+  margin: 0 auto;
+}
+
+.faq-item {
+  background-color: #1e1b26;
+
+  border: 1px solid #2f2a3a;
+
+  border-radius: 10px;
+
+  margin-bottom: 1rem;
+
+  overflow: hidden;
+}
+
+.faq-question {
+  display: block;
+
+  padding: 1rem 1.2rem;
+
+  color: #ffffff;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.faq-question:hover {
+  color: #ff2e88;
+
+  background-color: #211d2b;
+}
+
+.faq-answer {
+  display: none;
+
+  padding: 0 1.2rem 1.2rem;
+
+  color: #c7c2d1;
+}
+
+
+/* CSS-ONLY ACCORDION */
+
+.faq-answer:target {
+  display: block;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.site-footer {
+  padding: 2rem 1.5rem;
+
+  text-align: center;
+
+  color: #8b8496;
+
+  font-size: 0.85rem;
+
+  border-top: 1px solid #2f2a3a;
+
+  background-color: #100e15;
+}
+/* =========================================
+   CINEHUB
+   Responsive CSS
+   Mobile-first
+   ========================================= */
+
+
+/* =========================================
+   MOBILE
+   Menos de 640px
+   ========================================= */
+
+@media (max-width: 639px) {
+
+  .site-header {
+    align-items: flex-start;
+  }
+
+  .nav-list {
+    flex-direction: column;
+
+    gap: 0.65rem;
+  }
+
+  .hero {
+    min-height: 65vh;
+
+    padding: 3rem 1.25rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+
+  .search-form {
+    max-width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+
+    align-self: stretch;
+  }
+
+  #populares,
+  #equipo,
+  .signup,
+  .faq {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .movie-grid,
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .movie-card img {
+    max-height: 500px;
+  }
+
+  .team-card {
+    padding: 1.25rem;
+  }
+
+  .signup-form {
+    max-width: 100%;
+  }
+
+}
+
+
+/* =========================================
+   TABLET
+   640px - 1024px
+   ========================================= */
+
+@media (min-width: 640px) and (max-width: 1024px) {
+
+  .site-header {
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 1rem 2rem;
+  }
+
+  .nav-list {
+    gap: 1rem;
+  }
+
+  .hero {
+    padding: 4rem 2rem;
+
+    min-height: 60vh;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+
+    max-width: 750px;
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+  }
+
+  .search-form {
+    max-width: 35rem;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #populares,
+  #equipo,
+  .signup {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .faq {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+}
+
+
+/* =========================================
+   DESKTOP
+   Más de 1024px
+   ========================================= */
+
+@media (min-width: 1025px) {
+
+  .site-header {
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 1rem 4rem;
+  }
+
+  .nav-list {
+    gap: 1.5rem;
+  }
+
+  .hero {
+    min-height: 70vh;
+
+    padding: 5rem 4rem;
+  }
+
+  .hero h1 {
+    font-size: 4rem;
+
+    max-width: 900px;
+  }
+
+  .hero p {
+    font-size: 1.15rem;
+  }
+
+  .search-form {
+    max-width: 38rem;
+  }
+
+  #populares,
+  #equipo,
+  .signup {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .movie-card img {
+    height: 430px;
+  }
+
+  .faq {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+}

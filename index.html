@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineHub</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <p class="logo">CineHub</p>
+    <nav class="nav">
+      <ul class="nav-list">
+        <li><a href="#populares">Películas</a></li>
+        <li><a href="#registro">Mis planes</a></li>
+        <li><a href="#buscar">Buscar</a></li>
+        <li><a href="about.html">Acerca de</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="buscar" class="hero">
+      <h1>Deja de perder tus planes de cine en el chat grupal</h1>
+      <p>
+        Encuentra una película, elige un horario y crea un plan que tus amigos puedan
+        confirmar con un solo clic.
+      </p>
+      <form action="#" method="get" class="search-form">
+        <label for="search">Buscar películas</label>
+        <input type="text" id="search" name="search" placeholder="Ej: Spider-Man">
+        <button type="submit" class="btn">Buscar</button>
+      </form>
+    </section>
+
+    <section id="populares">
+      <h2>Películas populares</h2>
+
+      <div class="movie-grid">
+        <article class="movie-card">
+          <img src="images/spiderman.jpg" alt="Imagen de la película Spider-Man">
+          <h3>Spider-Man</h3>
+          <p>⭐ 8.2 · Acción</p>
+        </article>
+
+        <article class="movie-card">
+          <img src="images/odisea.jpg" alt="Imagen de la película L'Odyssée">
+          <h3>L'Odyssée</h3>
+          <p>⭐ 8.0 · Aventura</p>
+        </article>
+
+        <article class="movie-card">
+          <img src="images/michael.jpg" alt="Imagen de la película Michael">
+          <h3>Michael</h3>
+          <p>⭐ 8.1 · Drama</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="registro" class="signup">
+      <h2>Crea tu cuenta</h2>
+      <p>Regístrate para crear planes de cine y compartirlos con tus amigos.</p>
+      <form action="#" method="post" class="signup-form">
+        <div class="field">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn">Registrarme</button>
+      </form>
+    </section>
+
+    <section id="faq" class="faq">
+      <h2>Preguntas frecuentes</h2>
+
+      <div class="faq-item">
+        <a class="faq-question" href="#faq-1">¿CineHub es gratis?</a>
+        <div class="faq-answer" id="faq-1">
+          <p>Sí, crear planes y confirmar asistencia no tiene costo.</p>
+          <a href="#faq">Cerrar</a>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <a class="faq-question" href="#faq-2">¿Necesito una cuenta para usar CineHub?</a>
+        <div class="faq-answer" id="faq-2">
+          <p>Puedes explorar películas sin cuenta, pero necesitas registrarte para crear y compartir un plan.</p>
+          <a href="#faq">Cerrar</a>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <a class="faq-question" href="#faq-3">¿Puedo cancelar un plan después de crearlo?</a>
+        <div class="faq-answer" id="faq-3">
+          <p>Sí, el creador del plan puede cancelarlo en cualquier momento antes de la función.</p>
+          <a href="#faq">Cerrar</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>CineHub · Universidad de La Sabana</p>
+  </footer>
+</body>
+</html>
