@@ -34,11 +34,13 @@ CineHub tiene dos roles con permisos distintos:
 
 `index.html` y `about.html` — landing page y página de equipo, construidas con HTML semántico y CSS puro (Flexbox, Grid, responsive en 3 breakpoints), incluyendo un acordeón de preguntas frecuentes hecho solo con CSS (`:target`, sin JavaScript).
 
+[Ver prototipo publicado en GitHub Pages](https://juanpablovanegas.github.io/cinehub/)
+
 ## Figma
 
 Wireframes del equipo: https://www.figma.com/design/wzUZNENyJz16hURy0eYDit/CINEHUB
 
-> Pendiente: completar wireframes para las pantallas de detalle de película, funciones/horarios, y crear/compartir plan — por ahora el Figma cubre la pantalla Home.
+> Completado: wireframes de todas las pantallas y al menos una pantalla con anotaciones para el Milestone 1.
 
 ## Restricciones del proyecto (verificadas)
 
