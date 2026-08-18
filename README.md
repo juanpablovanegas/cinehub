@@ -38,9 +38,9 @@ CineHub tiene dos roles con permisos distintos:
 
 ## Figma
 
-Wireframes del equipo: https://www.figma.com/design/wzUZNENyJz16hURy0eYDit/CINEHUB
+Wireframes del equipo (5 pantallas: Inicio, Películas, Mis planes, Buscar, Acerca de): https://www.figma.com/design/GJN2lOeZOoOmQL95y17bI5/CINEHUB--copia-?node-id=2002-2
 
-> Completado: wireframes de todas las pantallas y al menos una pantalla con anotaciones para el Milestone 1.
+> Completado: wireframes de todas las pantallas del proyecto para el Milestone 1.
 
 ## Restricciones del proyecto (verificadas)
 
