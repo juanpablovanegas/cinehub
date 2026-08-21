@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Crea un plan de cine en CineHub.">
+  <title>Crear plan — CineHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/responsive.css">
+
+</head>
+
+<body class="min-h-screen bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-white">
+  <header class="site-header">
+    <a class="logo" href="index.html">CineHub</a>
+    <nav aria-label="Navegación principal">
+      <ul class="nav-list">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#peliculas">Películas</a></li>
+        <li><a href="index.html#mis-planes">Mis planes</a></li>
+        <li><a href="about.html">Acerca de</a></li>
+      </ul>
+    </nav>
+    <button id="theme-toggle" type="button" class="btn" aria-label="Cambiar tema" aria-pressed="false">🌙 Modo oscuro</button>
+  </header>
+
+  <main>
+    <section class="px-6 py-12 md:px-10 lg:px-16" aria-labelledby="create-plan-title">
+      <div class="mx-auto max-w-3xl">
+        <p class="font-semibold uppercase tracking-wide text-pink-600">Paso 3</p>
+        <h1 id="create-plan-title" class="mt-2 text-4xl font-extrabold">Crear un plan de cine</h1>
+        <p class="mt-3 text-gray-600 dark:text-gray-300">
+          Revisa la función elegida, agrega un nombre para el plan y crea la salida.
+        </p>
+
+        <form id="plan-form" class="signup-form" action="#" method="post">
+          <div class="field">
+            <label for="plan-name">Nombre del plan</label>
+            <input id="plan-name" name="plan-name" type="text" placeholder="Ej: Cine con amigos" required>
+            <p id="plan-name-error" class="field-error" hidden></p>
+          </div>
+
+          <div class="plan-card">
+            <h2 class="text-2xl font-bold">Resumen de la función</h2>
+            <div class="plan-info">
+              <div class="plan-info-item"><span>Película</span><strong id="selected-movie">—</strong></div>
+              <div class="plan-info-item"><span>Cine</span><strong id="selected-cinema">—</strong></div>
+              <div class="plan-info-item"><span>Fecha</span><strong id="selected-date">—</strong></div>
+              <div class="plan-info-item"><span>Hora</span><strong id="selected-time">—</strong></div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="invitees">Amigos invitados</label>
+            <input id="invitees" name="invitees" type="text" placeholder="Ej: Juan, David, Samuel">
+          </div>
+
+          <button class="btn" type="submit">Crear y compartir plan</button>
+          <p id="plan-form-message" class="form-success" hidden></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>CineHub · Universidad de La Sabana</p>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

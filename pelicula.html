@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Detalle de una película en CineHub.">
+  <title>Película — CineHub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/responsive.css">
+
+</head>
+
+<body class="min-h-screen bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-white">
+  <header class="site-header">
+    <a class="logo" href="index.html">CineHub</a>
+    <nav aria-label="Navegación principal">
+      <ul class="nav-list">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#peliculas">Películas</a></li>
+        <li><a href="index.html#mis-planes">Mis planes</a></li>
+        <li><a href="about.html">Acerca de</a></li>
+      </ul>
+    </nav>
+    <button id="theme-toggle" type="button" class="btn" aria-label="Cambiar tema" aria-pressed="false">🌙 Modo oscuro</button>
+  </header>
+
+  <main>
+    <section class="px-6 py-12 md:px-10 lg:px-16" aria-labelledby="movie-title">
+      <div class="mx-auto grid max-w-6xl gap-8 md:grid-cols-[280px_1fr]">
+        <img id="movie-image" class="w-full rounded-2xl object-cover shadow-xl" src="" alt="">
+
+        <div>
+          <p class="font-semibold uppercase tracking-wide text-pink-600">Detalle de película</p>
+          <h1 id="movie-title" class="mt-2 text-4xl font-extrabold md:text-5xl"></h1>
+          <p id="movie-meta" class="mt-4 text-lg text-gray-600 dark:text-gray-300"></p>
+          <p id="movie-description" class="mt-6 max-w-3xl text-gray-600 dark:text-gray-300"></p>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a id="schedule-link" class="btn" href="funciones.html">Ver funciones</a>
+            <a class="btn btn-secondary" href="index.html#peliculas">Volver a películas</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>CineHub · Universidad de La Sabana</p>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
