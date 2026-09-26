@@ -1,0 +1,206 @@
+/* =========================================
+   CINEHUB
+   Responsive CSS
+   Mobile-first
+   ========================================= */
+
+
+/* =========================================
+   MOBILE
+   Menos de 640px
+   ========================================= */
+
+@media (max-width: 639px) {
+
+  .site-header {
+    align-items: flex-start;
+  }
+
+  .nav-list {
+    flex-direction: column;
+
+    gap: 0.65rem;
+  }
+
+  .hero {
+    min-height: 65vh;
+
+    padding: 3rem 1.25rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+
+  .search-form {
+    max-width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+
+    align-self: stretch;
+  }
+
+  #populares,
+  #equipo,
+  .signup,
+  .faq {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .movie-grid,
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .movie-card img {
+    max-height: 500px;
+  }
+
+  .team-card {
+    padding: 1.25rem;
+  }
+
+  .signup-form {
+    max-width: 100%;
+  }
+
+}
+
+
+/* =========================================
+   TABLET
+   640px - 1024px
+   ========================================= */
+
+@media (min-width: 640px) and (max-width: 1024px) {
+
+  .site-header {
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 1rem 2rem;
+  }
+
+  .nav-list {
+    gap: 1rem;
+  }
+
+  .hero {
+    padding: 4rem 2rem;
+
+    min-height: 60vh;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+
+    max-width: 750px;
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+  }
+
+  .search-form {
+    max-width: 35rem;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #populares,
+  #equipo,
+  .signup {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .faq {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+}
+
+
+/* =========================================
+   DESKTOP
+   Más de 1024px
+   ========================================= */
+
+@media (min-width: 1025px) {
+
+  .site-header {
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 1rem 4rem;
+  }
+
+  .nav-list {
+    gap: 1.5rem;
+  }
+
+  .hero {
+    min-height: 70vh;
+
+    padding: 5rem 4rem;
+  }
+
+  .hero h1 {
+    font-size: 4rem;
+
+    max-width: 900px;
+  }
+
+  .hero p {
+    font-size: 1.15rem;
+  }
+
+  .search-form {
+    max-width: 38rem;
+  }
+
+  #populares,
+  #equipo,
+  .signup {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .movie-card img {
+    height: 430px;
+  }
+
+  .faq {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+}
