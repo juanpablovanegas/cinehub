@@ -1,6 +1,6 @@
 import { createContext, useCallback, useMemo } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage.js";
-import { buildPlan, setRsvp } from "../services/planService.js";
+import { buildPlan, buildPollPlan, closePoll, setRsvp, voteForMovie } from "../services/planService.js";
 
 export const PlanContext = createContext(null);
 
@@ -38,6 +38,27 @@ export function PlanProvider({ children }) {
     [setPlans]
   );
 
+  /** Como createPlan, pero con varias películas candidatas en vez de una fija. */
+  const createPlanWithPoll = useCallback(
+    (candidateMovies, form, owner) => {
+      const plan = buildPollPlan(selection, candidateMovies, form, owner);
+      setPlans((list) => [...asList(list), plan]);
+      return plan;
+    },
+    [selection, setPlans]
+  );
+
+  const voteMovie = useCallback(
+    (id, person, movieId) =>
+      setPlans((list) => asList(list).map((plan) => (plan.id === id ? voteForMovie(plan, person, movieId) : plan))),
+    [setPlans]
+  );
+
+  const closeMoviePoll = useCallback(
+    (id) => setPlans((list) => asList(list).map((plan) => (plan.id === id ? closePoll(plan) : plan))),
+    [setPlans]
+  );
+
   const value = useMemo(
     () => ({
       plans,
@@ -48,8 +69,22 @@ export function PlanProvider({ children }) {
       updatePlan,
       deletePlan,
       respondToPlan,
+      createPlanWithPoll,
+      voteMovie,
+      closeMoviePoll,
     }),
-    [plans, selection, setSelection, createPlan, updatePlan, deletePlan, respondToPlan]
+    [
+      plans,
+      selection,
+      setSelection,
+      createPlan,
+      updatePlan,
+      deletePlan,
+      respondToPlan,
+      createPlanWithPoll,
+      voteMovie,
+      closeMoviePoll,
+    ]
   );
 
   return <PlanContext.Provider value={value}>{children}</PlanContext.Provider>;

@@ -2,7 +2,18 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { findMovie, getMovies, getShowtimes, queryMovies } from "./movieService.js";
-import { filterPlans, getPlanStats, getRsvpStatus, isUpcoming, setRsvp, validatePlan } from "./planService.js";
+import {
+  buildPollPlan,
+  closePoll,
+  filterPlans,
+  getPlanStats,
+  getPollResults,
+  getRsvpStatus,
+  isUpcoming,
+  setRsvp,
+  validatePlan,
+  voteForMovie,
+} from "./planService.js";
 import { validateForm } from "../utils/validation.js";
 
 test("catálogo: buscar, filtrar y ordenar", async () => {
@@ -42,6 +53,32 @@ test("planes: RSVP, fechas, filtros y estadísticas", () => {
   assert.deepEqual(getPlanStats([moved, future]), { total: 2, yes: 1, maybe: 1, no: 1 });
   assert.equal(validatePlan({ name: " ", organizer: "x" }).field, "name");
   assert.equal(validatePlan({ name: "Cine", organizer: "Ana" }), null);
+});
+
+test("votación de película: votar, contar y cerrar", () => {
+  const selection = { cinema: { name: "Cine X", location: "Chía" }, date: "26 sep", dateISO: "2026-09-26", time: "20:00" };
+  const candidates = [
+    { id: "dune", title: "Dune", genre: "Ciencia ficción", poster: "dune.jpg" },
+    { id: "it", title: "It", genre: "Terror", poster: "it.jpg" },
+  ];
+  const plan = buildPollPlan(selection, candidates, { name: "Cine viernes", organizer: "Ana", message: "" });
+  assert.equal(plan.movie, null);
+  assert.equal(plan.poll.isOpen, true);
+  assert.deepEqual(plan.poll.candidates.map((c) => c.id), ["dune", "it"]);
+
+  let voted = voteForMovie(plan, "Ana", "it");
+  voted = voteForMovie(voted, "Luis", "it");
+  voted = voteForMovie(voted, "Eva", "dune");
+  assert.deepEqual(plan.poll.votes, {}, "no muta el plan original");
+
+  const results = getPollResults(voted);
+  assert.deepEqual(results.map((r) => [r.id, r.votes]), [["it", 2], ["dune", 1]]);
+
+  const closed = closePoll(voted);
+  assert.equal(closed.movie.id, "it");
+  assert.equal(closed.poll.isOpen, false);
+  assert.equal(closed.poll.winnerId, "it");
+  assert.equal(closePoll(closed), closed, "cerrar una votación ya cerrada no hace nada");
 });
 
 test("validación del registro (legacy)", () => {

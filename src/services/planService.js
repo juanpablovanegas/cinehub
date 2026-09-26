@@ -101,3 +101,62 @@ export function getShareText(plan) {
     "¿Quién se apunta?",
   ].filter(Boolean).join("\n");
 }
+
+/* =========================================================
+   Votación de película — cuando el grupo no se pone de acuerdo,
+   el organizador propone varias candidatas y cada invitado vota.
+   `plan.movie` queda en null hasta que se cierra la votación.
+   ========================================================= */
+
+/** Plan sin película fija, con una lista de candidatas para votar. */
+export function buildPollPlan(selection, candidateMovies, form, owner = null, now = new Date()) {
+  const organizer = form.organizer.trim();
+  return {
+    id: `cinehub-${now.getTime()}`,
+    name: form.name.trim(),
+    organizer,
+    ownerEmail: owner?.email ?? null,
+    message: form.message.trim(),
+    movie: null,
+    cinema: selection.cinema,
+    date: selection.date,
+    dateISO: selection.dateISO,
+    time: selection.time,
+    createdAt: now.toISOString(),
+    rsvp: { yes: [organizer], maybe: [], no: [] },
+    poll: {
+      candidates: candidateMovies.map(toPlanMovie),
+      votes: {}, // { [person]: movieId } — un voto por persona, se puede cambiar
+      isOpen: true,
+      winnerId: null,
+    },
+  };
+}
+
+/** Registra (o cambia) el voto de `person` por `movieId`. No muta el plan. */
+export function voteForMovie(plan, person, movieId) {
+  if (!plan.poll) return plan;
+  return { ...plan, poll: { ...plan.poll, votes: { ...plan.poll.votes, [person]: movieId } } };
+}
+
+/** Candidatas con su conteo de votos, ordenadas de más a menos votada. */
+export function getPollResults(plan) {
+  if (!plan.poll) return [];
+  const tally = new Map(plan.poll.candidates.map((candidate) => [candidate.id, 0]));
+  for (const movieId of Object.values(plan.poll.votes)) {
+    if (tally.has(movieId)) tally.set(movieId, tally.get(movieId) + 1);
+  }
+  return plan.poll.candidates
+    .map((candidate) => ({ ...candidate, votes: tally.get(candidate.id) ?? 0 }))
+    .sort((a, b) => b.votes - a.votes);
+}
+
+/** Cierra la votación: la candidata más votada pasa a ser `plan.movie`. */
+export function closePoll(plan) {
+  if (!plan.poll?.isOpen) return plan;
+  const [winner] = getPollResults(plan);
+  if (!winner) return plan;
+  const { id, title, year, duration, rating, genres, image } = winner;
+  const movie = { id, title, year, duration, rating, genres, image };
+  return { ...plan, movie, poll: { ...plan.poll, isOpen: false, winnerId: winner.id } };
+}
