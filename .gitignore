@@ -1,0 +1,10 @@
+node_modules
+dist
+
+# Token de TMDB del prototipo legacy — nunca subirlo
+legacy/js/config.js
+.env
+.env.local
+
+.DS_Store
+Thumbs.db
