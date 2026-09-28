@@ -125,7 +125,7 @@ y **custom hooks**, manteniendo la identidad visual y todas las funcionalidades 
 
 ```bash
 npm install
-npm run dev       # desarrollo → http://localhost:5173/m1-avance-projecto-final-cinehub/
+npm run dev       # desarrollo → http://localhost:5173/cinehub/
 npm run build     # build de producción en dist/ (incluye 404.html para GitHub Pages)
 npm run preview   # sirve el build localmente
 npm run lint      # ESLint (reglas de hooks de React)
@@ -203,13 +203,13 @@ delegan acciones; ninguno accede a `localStorage` directamente.
 
 ### GitHub Pages
 
-- `vite.config.js` define `base: "/m1-avance-projecto-final-cinehub/"` y el router usa ese `basename`.
+- `vite.config.js` define `base: "/cinehub/"` y el router usa ese `basename`.
 - **Refresh en rutas profundas:** el build copia `index.html` como `404.html`. GitHub Pages sirve ese
   archivo para `/movie/dune` y React Router resuelve la ruta.
 - **Deploy:** `.github/workflows/deploy.yml` hace `lint` + `build` y publica `dist/` en cada push a `master`.
   Requiere una sola vez: *Settings → Pages → Source: GitHub Actions*.
 
-**[Ver CineHub en GitHub Pages](https://dsaw-2026-2.github.io/m1-avance-projecto-final-cinehub/)**
+**[Ver CineHub en GitHub Pages](https://juanpablovanegas.github.io/cinehub/)**
 
 ### Prototipo anterior
 

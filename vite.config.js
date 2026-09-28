@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 // GitHub Pages publica el sitio en https://<org>.github.io/<repositorio>/
-const REPO_NAME = "m1-avance-projecto-final-cinehub";
+const REPO_NAME = "cinehub";
 
 /*
  * GitHub Pages no conoce las rutas de React Router: al refrescar /movie/dune
