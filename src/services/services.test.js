@@ -9,9 +9,11 @@ import {
   getPlanStats,
   getPollResults,
   getRsvpStatus,
+  hasPlanErrors,
   isUpcoming,
   setRsvp,
   validatePlan,
+  validatePlanFields,
   voteForMovie,
 } from "./planService.js";
 import { validateForm } from "../utils/validation.js";
@@ -53,6 +55,21 @@ test("planes: RSVP, fechas, filtros y estadísticas", () => {
   assert.deepEqual(getPlanStats([moved, future]), { total: 2, yes: 1, maybe: 1, no: 1 });
   assert.equal(validatePlan({ name: " ", organizer: "x" }).field, "name");
   assert.equal(validatePlan({ name: "Cine", organizer: "Ana" }), null);
+});
+
+test("planes: validación inline por campo (campo vacío + longitud mínima)", () => {
+  assert.deepEqual(validatePlanFields({ name: "", organizer: "" }), {
+    name: "Escribe un nombre para el plan.",
+    organizer: "Escribe tu nombre.",
+  });
+  const tooShort = validatePlanFields({ name: "Ab", organizer: "A" });
+  assert.ok(tooShort.name.includes("al menos 3"));
+  assert.ok(tooShort.organizer.includes("al menos 2"));
+  assert.equal(hasPlanErrors(tooShort), true);
+
+  const valid = validatePlanFields({ name: "Cine", organizer: "Ana" });
+  assert.deepEqual(valid, { name: "", organizer: "" });
+  assert.equal(hasPlanErrors(valid), false);
 });
 
 test("votación de película: votar, contar y cerrar", () => {

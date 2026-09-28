@@ -6,6 +6,7 @@ import CreatePlanPage from "../pages/CreatePlanPage.jsx";
 import DashboardPage from "../pages/DashboardPage.jsx";
 import FunctionsPage from "../pages/FunctionsPage.jsx";
 import HomePage from "../pages/HomePage.jsx";
+import LoginPage from "../pages/LoginPage.jsx";
 import MovieDetailPage from "../pages/MovieDetailPage.jsx";
 import MoviesPage from "../pages/MoviesPage.jsx";
 import MyPlansPage from "../pages/MyPlansPage.jsx";
@@ -31,6 +32,7 @@ export const router = createBrowserRouter(
         { path: "plan/:id", element: <PlanPage />, ...page("plan") },
         { path: "my-plans", element: <MyPlansPage />, ...page("my-plans") },
         { path: "profile", element: <ProfilePage />, ...page("profile") },
+        { path: "login", element: <LoginPage />, ...page("login") },
         {
           element: <ProtectedRoute />,
           children: [{ path: "dashboard", element: <DashboardPage />, ...page("dashboard") }],

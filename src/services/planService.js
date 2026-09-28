@@ -24,10 +24,28 @@ export function toPlanMovie(movie) {
   };
 }
 
-export function validatePlan({ name = "", organizer = "" }) {
-  if (!name.trim()) return { field: "name", message: "Escribe un nombre para el plan." };
-  if (!organizer.trim()) return { field: "organizer", message: "Escribe tu nombre." };
-  return null;
+/** Errores por campo (como validateForm de utils/validation.js). */
+export function validatePlanFields({ name = "", organizer = "" }) {
+  const errors = { name: "", organizer: "" };
+
+  if (!name.trim()) errors.name = "Escribe un nombre para el plan.";
+  else if (name.trim().length < 3) errors.name = "El nombre debe tener al menos 3 caracteres.";
+
+  if (!organizer.trim()) errors.organizer = "Escribe tu nombre.";
+  else if (organizer.trim().length < 2) errors.organizer = "Tu nombre debe tener al menos 2 caracteres.";
+
+  return errors;
+}
+
+export function hasPlanErrors(errors) {
+  return Object.values(errors).some(Boolean);
+}
+
+/** Compatibilidad: primer error como {field, message}, o null si no hay ninguno. */
+export function validatePlan(values) {
+  const errors = validatePlanFields(values);
+  const field = Object.keys(errors).find((key) => errors[key]);
+  return field ? { field, message: errors[field] } : null;
 }
 
 export function buildPlan(selection, form, owner = null, now = new Date()) {

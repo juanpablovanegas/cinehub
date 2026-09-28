@@ -137,7 +137,7 @@ npm test          # pruebas de la lógica pura (node:test)
 | Ruta | Página | Notas |
 | --- | --- | --- |
 | `/` | — | Redirige a `/home` |
-| `/home` | `HomePage` | Hero con buscador, películas en tendencia, planes recientes y FAQ |
+| `/home` | `HomePage` | Hero con buscador, tendencias, sección "Descubre" (API pública), planes y FAQ |
 | `/movies` | `MoviesPage` | Catálogo con búsqueda, filtros por género y orden |
 | `/movie/:id` | `MovieDetailPage` | **Ruta dinámica** (`useParams`) · tráiler · plataformas · favoritos · compartir |
 | `/functions?movie=id` | `FunctionsPage` | Elegir cine, fecha y hora (`useSearchParams`) |
@@ -145,7 +145,8 @@ npm test          # pruebas de la lógica pura (node:test)
 | `/plan/:id` | `PlanPage` | **Ruta dinámica** · responder Sí / Tal vez / No · editar (organizador) |
 | `/my-plans` | `MyPlansPage` | Estadísticas, filtro próximos/anteriores, compartir y eliminar |
 | `/profile` | `ProfilePage` | Registro / inicio de sesión, o el perfil si hay sesión |
-| `/dashboard` | `DashboardPage` | **Ruta protegida** (`ProtectedRoute`): sin sesión redirige a `/profile` |
+| `/login` | `LoginPage` | Inicio de sesión dedicado · destino de `ProtectedRoute` |
+| `/dashboard` | `DashboardPage` | **Ruta protegida** (`ProtectedRoute`): sin sesión redirige a `/login` |
 | `/about` | `AboutPage` | Proyecto y equipo |
 | `*` | `NotFoundPage` | Ruta inexistente |
 
@@ -158,18 +159,18 @@ src/
 ├── app/router.jsx           Definición de rutas (createBrowserRouter)
 ├── pages/                   Una página por ruta (composición, sin lógica pesada)
 ├── components/
-│   ├── layout/              Layout (Header + Outlet + Footer), Header, Navbar, Footer
+│   ├── layout/              Layout (Header + Breadcrumb + Outlet + Footer), Header, Navbar, Breadcrumb, Footer
 │   ├── common/              Button, Modal, Loading, EmptyState, Toast, PosterImage
 │   ├── movies/              MovieCard, MoviePoster, MovieGrid, MovieSearch, MovieFilters
 │   ├── movie-detail/        MovieInfo, MovieActions, MovieBackdrop, TrailerModal, WatchModal…
 │   ├── functions/           SelectedMovie, ShowtimeStep, ShowtimeOptions, BookingSummary
 │   ├── plans/               PlanCard, PlanForm, PlanStats, PlanHero, PlanSummary, RsvpPanel
-│   ├── home/ · auth/        Secciones del inicio · AuthForm y ProfileCard
+│   ├── home/ · auth/        HomeHero, TrendingSection, DiscoverSection, PlansPreview, FaqSection · AuthForm, ProfileCard
 │   └── ProtectedRoute.jsx   Guardia de rutas privadas
 ├── context/                 AuthContext, MovieContext, PlanContext, ToastContext
-├── hooks/                   useMovies, useMovie, useAuth, usePlans, useFavorites,
-│                            useLocalStorage, useTheme, useReveal, useShare, useToast…
-├── services/                movieService, planService, authService (+ services.test.js)
+├── hooks/                   useMovies, useMovie, useAuth, usePlans, useFavorites, useDiscoverMovies,
+│                            useOnlineStatus, useLocalStorage, useTheme, useReveal, useShare, useToast…
+├── services/                movieService, planService, authService, discoverService (+ services.test.js)
 ├── utils/                   storage, validation, palette, share, poster
 ├── data/                    Catálogo de 40 películas, tráilers, cines, plataformas, FAQ
 └── styles/                  CSS del prototipo (global, componentes y páginas)
@@ -206,14 +207,77 @@ delegan acciones; ninguno accede a `localStorage` directamente.
 - `vite.config.js` define `base: "/cinehub/"` y el router usa ese `basename`.
 - **Refresh en rutas profundas:** el build copia `index.html` como `404.html`. GitHub Pages sirve ese
   archivo para `/movie/dune` y React Router resuelve la ruta.
-- **Deploy:** `.github/workflows/deploy.yml` hace `lint` + `build` y publica `dist/` en cada push a `master`.
+- **Deploy:** `.github/workflows/deploy.yml` hace `lint` + `build` y publica `dist/` en cada push a `main`.
   Requiere una sola vez: *Settings → Pages → Source: GitHub Actions*.
+- **`BrowserRouter` (vía `createBrowserRouter`), no `HashRouter`:** el `spaFallback` de `vite.config.js`
+  copia `index.html` a `404.html` en el build, que es lo que GitHub Pages sirve para cualquier ruta que
+  no reconoce (por ejemplo `/movie/dune` al refrescar). React Router recibe esa misma `index.html` y
+  resuelve la ruta con el `basename` correcto, así que no hace falta `HashRouter`.
 
 **[Ver CineHub en GitHub Pages](https://juanpablovanegas.github.io/cinehub/)**
 
 ### Prototipo anterior
 
-La versión HTML/CSS/JS del Milestone 1 está archivada en `legacy/` como referencia.
+La versión HTML/CSS/JS del Milestone 1 está archivada en `prototipo-html/` como referencia.
+
+### Tecnologías
+
+- **React 19** + **Vite** (SPA, sin backend propio todavía).
+- **React Router 7** (`createBrowserRouter` / `RouterProvider`) — rutas, rutas dinámicas, ruta protegida y 404.
+- **Context API** + **custom hooks** para el estado global (sin librerías de estado externas).
+- **CSS** plano (sin frameworks de utilidades).
+- **API pública:** [Studio Ghibli API](https://ghibliapi.vercel.app) (`fetch`, sin API key) para la sección
+  "Descubre" del inicio — ver [HW07](#hw07--async-javascript) abajo.
+- **GitHub Actions** + **GitHub Pages** para el deploy.
+
+---
+
+## HW07 — Async JavaScript
+
+La sección **"Descubre"** de `/home` (`DiscoverSection` + `useDiscoverMovies` + `discoverService`) consume
+la API pública de Studio Ghibli con `fetch` y `async/await` (sin `.then()`, sin axios):
+
+- **Loading / success / error visibles:** spinner mientras carga, grilla de tarjetas si responde bien,
+  mensaje de error legible si falla (`EmptyState`).
+- **Cache offline:** cada respuesta exitosa se guarda en `localStorage` bajo la clave `cinehub_discover_movies`.
+  Si el `fetch` falla y hay cache, se muestra esa cache con el aviso **"Showing saved data"**; si falla y no
+  hay cache, se muestra el estado de error.
+- **`navigator.onLine` + eventos `online`/`offline`:** `useOnlineStatus` (con cleanup de los listeners) alimenta
+  el indicador de conectividad del header (🟢 En línea / 🔴 Sin conexión).
+- **Cleanup con `AbortController`:** si `DiscoverSection` se desmonta antes de que responda el `fetch`, la
+  petición se cancela (`useDiscoverMovies`).
+
+El catálogo principal (`movieService.getMovies` / `getMovieById`) sigue siendo local (40 películas curadas
+con póster, género y universo propios de CineHub), pero también se consume con `async/await` + `try/catch`
+desde `MovieContext`, exponiendo `loading` y `error`, listo para apuntar a una API real en el backend (M3)
+sin tocar los componentes.
+
+## HW09 — React State
+
+- **Formularios controlados reales de CineHub:** `AuthForm` (registro/login) y `PlanForm` (crear/editar plan)
+  — todos los inputs usan `value` + `onChange` contra `useState`, sin leer el DOM.
+- **Validación en línea, junto a cada campo**, sin `alert()`: `AuthForm` (`utils/validation.js`) y `PlanForm`
+  (`planService.validatePlanFields`). Ambos exigen más que "campo vacío": nombre mínimo 2/3 caracteres, correo
+  con formato válido, contraseña mínima de 8 caracteres.
+- **Reset tras envío exitoso:** `PlanForm` limpia sus campos (`setValues(EMPTY)`) después de crear el plan;
+  `AuthForm` navega a la página protegida original, lo que desmonta el formulario.
+- **Estado inmutable en todos lados:** `setMovies([...])`, `setPlans((list) => [...list, plan])`,
+  `setValues((current) => ({ ...current, [name]: value }))` — nunca `push`/mutación directa (ver `PlanContext`,
+  `MovieContext`, `AuthForm`, `PlanForm`).
+- **`useEffect` con fetch al montar y dependencias correctas:** `MovieContext` (`[]`), `useMovie` (`[id]`),
+  `useDiscoverMovies` (`[]`, con `AbortController` de cleanup).
+
+## HW10 — React Router + Architecture
+
+- **11 rutas** (mínimo pedido: 3), con **ruta dinámica** (`/movie/:id`, `/plan/:id` vía `useParams`), **ruta
+  protegida** (`/dashboard` vía `ProtectedRoute` + sesión en `localStorage`), página **`/login`** dedicada y
+  **404** (`*` → `NotFoundPage`).
+- **`createBrowserRouter`** (la API de datos de React Router, equivalente a `<BrowserRouter>`), no `HashRouter`
+  — ver la decisión documentada en [GitHub Pages](#github-pages) arriba.
+- **Breadcrumb con `useLocation()`** (`components/layout/Breadcrumb.jsx`) debajo del header, indicando en qué
+  página está el usuario.
+- **Arquitectura** `src/{components,pages,data,context,hooks,services,utils,styles}` — ver más abajo. Ningún
+  componente supera ~80 líneas; los datos estáticos viven en `src/data/`, nunca embebidos en un componente.
 
 ---
 

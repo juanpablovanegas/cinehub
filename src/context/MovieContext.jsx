@@ -12,15 +12,26 @@ const INITIAL_FILTERS = { query: "", genre: "todas", sort: "default" };
 export function MovieProvider({ children }) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
 
   useEffect(() => {
     let active = true;
-    getMovies().then((list) => {
-      if (!active) return;
-      setMovies(list);
-      setLoading(false);
-    });
+
+    async function loadMovies() {
+      try {
+        const list = await getMovies();
+        if (!active) return;
+        setMovies(list);
+        setError(null);
+      } catch (err) {
+        if (active) setError(err.message);
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+
+    loadMovies();
     return () => {
       active = false;
     };
@@ -31,8 +42,8 @@ export function MovieProvider({ children }) {
   }, []);
 
   const value = useMemo(
-    () => ({ movies, loading, filters, setFilter }),
-    [movies, loading, filters, setFilter]
+    () => ({ movies, loading, error, filters, setFilter }),
+    [movies, loading, error, filters, setFilter]
   );
 
   return <MovieContext.Provider value={value}>{children}</MovieContext.Provider>;

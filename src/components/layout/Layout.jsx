@@ -1,5 +1,6 @@
 import { Outlet, ScrollRestoration, useMatches } from "react-router-dom";
 import Header from "./Header.jsx";
+import Breadcrumb from "./Breadcrumb.jsx";
 import Footer from "./Footer.jsx";
 import Toast from "../common/Toast.jsx";
 
@@ -15,6 +16,7 @@ export default function Layout() {
   return (
     <div className="app-shell" data-page={page}>
       <Header />
+      <Breadcrumb />
       <main>
         <Outlet />
       </main>

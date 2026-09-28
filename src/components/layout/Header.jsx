@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar.jsx";
 import { useTheme } from "../../hooks/useTheme.js";
+import { useOnlineStatus } from "../../hooks/useOnlineStatus.js";
 
 export default function Header() {
   const { isDark, toggleTheme } = useTheme();
+  const online = useOnlineStatus();
 
   return (
     <header className="site-header">
@@ -12,6 +14,10 @@ export default function Header() {
       </Link>
 
       <Navbar />
+
+      <span className="connectivity-badge" role="status" aria-live="polite">
+        {online ? "🟢 En línea" : "🔴 Sin conexión"}
+      </span>
 
       <button
         id="theme-toggle"
