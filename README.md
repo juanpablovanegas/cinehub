@@ -1,5 +1,5 @@
 # CineHub
-
+https://juanpablovanegas.github.io/cinehub/home
 Proyecto del curso DSAW · Universidad de La Sabana — **Milestone 2: React Frontend** (React + Vite + React Router).
 
 **Equipo:** Samuel Díaz Melo, Samuel David Ortiz Pico, David Fernando Gómez y Juan Pablo Vanegas.
