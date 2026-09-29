@@ -19,7 +19,11 @@ function toDiscoverMovie(film) {
 
 /** Trae películas desde la API pública. Lanza si la respuesta falla. */
 export async function fetchDiscoverMovies(signal) {
-  const response = await fetch(DISCOVER_API, { signal });
+  // El CDN de la API cachea la respuesta (con el header CORS del origen que la
+  // pidió primero) por URL exacta, sin tener en cuenta el Origin real. Sin este
+  // parámetro, un request hecho en desarrollo puede "envenenar" el cache y
+  // bloquear por CORS a cualquier otro origen (p. ej. GitHub Pages) después.
+  const response = await fetch(`${DISCOVER_API}?_=${Date.now()}`, { signal });
   if (!response.ok) {
     throw new Error(`La API respondió con estado ${response.status}`);
   }
